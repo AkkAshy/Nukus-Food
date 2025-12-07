@@ -40,6 +40,7 @@ export default function AdminEditRestaurantPage() {
     longitude: '',
     phone: '',
     is_active: true,
+    is_verified: true,
   });
   const [owners, setOwners] = useState<Owner[]>([]);
   const [error, setError] = useState('');
@@ -163,6 +164,7 @@ export default function AdminEditRestaurantPage() {
         longitude: data.longitude?.toString() || '59.6166',
         phone: data.phone || '',
         is_active: data.is_active ?? true,
+        is_verified: data.is_verified ?? true,
       });
     } catch (error) {
       console.error('Error fetching restaurant:', error);
@@ -203,7 +205,8 @@ export default function AdminEditRestaurantPage() {
         longitude: formData.longitude || undefined,
         phone: formData.phone,
         is_active: formData.is_active,
-      });
+        is_verified: formData.is_verified,
+      } as Partial<Restaurant>);
       setSuccess('Restoran muvaffaqiyatli yangilandi');
       setTimeout(() => setSuccess(''), 3000);
     } catch (err: unknown) {
@@ -353,17 +356,31 @@ export default function AdminEditRestaurantPage() {
                 />
               </div>
 
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  id="is_active"
-                  checked={formData.is_active}
-                  onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                  className="w-5 h-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                />
-                <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
-                  Faol (saytda ko'rinadi)
-                </label>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="is_active"
+                    checked={formData.is_active}
+                    onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
+                    className="w-5 h-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
+                    Faol
+                  </label>
+                </div>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    id="is_verified"
+                    checked={formData.is_verified}
+                    onChange={(e) => setFormData({ ...formData, is_verified: e.target.checked })}
+                    className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500"
+                  />
+                  <label htmlFor="is_verified" className="text-sm font-medium text-gray-700">
+                    Tasdiqlangan (saytda ko'rinadi)
+                  </label>
+                </div>
               </div>
 
               {error && (
