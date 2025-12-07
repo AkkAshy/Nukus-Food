@@ -9,7 +9,7 @@ import type { Restaurant } from '@/types';
 import {
   ArrowLeft, Store, MapPin, Phone, Instagram, MessageCircle,
   Clock, DollarSign, Save, AlertCircle, Check, Navigation, X,
-  Image, Upload, Trash2, Star
+  Image, Upload, Trash2, Star, Building2, UtensilsCrossed
 } from 'lucide-react';
 import type { WorkingHours, RestaurantImage } from '@/types';
 
@@ -365,6 +365,34 @@ export default function OwnerSettingsPage() {
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Sozlamalar</h1>
+        </div>
+
+        {/* Quick Links */}
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <Link
+            href="/owner/places"
+            className="bg-white rounded-xl p-4 shadow-sm ring-1 ring-black/5 hover:shadow-md transition-all flex items-center gap-3"
+          >
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <Building2 className="w-5 h-5 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-900">Joylar</h3>
+              <p className="text-xs text-gray-500">Stollar va kabinkalar</p>
+            </div>
+          </Link>
+          <Link
+            href="/owner/menu"
+            className="bg-white rounded-xl p-4 shadow-sm ring-1 ring-black/5 hover:shadow-md transition-all flex items-center gap-3"
+          >
+            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+              <UtensilsCrossed className="w-5 h-5 text-green-600" />
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-900">Menyu</h3>
+              <p className="text-xs text-gray-500">Taomlar va narxlar</p>
+            </div>
+          </Link>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
