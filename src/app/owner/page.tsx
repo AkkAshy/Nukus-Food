@@ -8,7 +8,8 @@ import { ownerApi } from '@/lib/api';
 import type { Restaurant, OwnerStats, OwnerReservation } from '@/types';
 import {
   Store, Calendar, Users, Clock, CheckCircle, XCircle, AlertCircle,
-  TrendingUp, ChevronRight, Settings, Building2, BarChart3, Phone, FileText
+  TrendingUp, ChevronRight, Settings, Building2, BarChart3, Phone, FileText,
+  UtensilsCrossed
 } from 'lucide-react';
 
 export default function OwnerDashboard() {
@@ -232,6 +233,24 @@ export default function OwnerDashboard() {
                 </div>
               </div>
               <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors" />
+            </div>
+          </Link>
+
+          <Link
+            href="/owner/menu"
+            className="bg-white rounded-2xl p-5 shadow-sm ring-1 ring-black/5 hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                  <UtensilsCrossed className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Menyu</h3>
+                  <p className="text-sm text-gray-500">Taomlar va narxlar</p>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors" />
             </div>
           </Link>
 

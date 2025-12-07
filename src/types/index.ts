@@ -134,6 +134,30 @@ export interface ReservationCreate {
   notes?: string;
 }
 
+// Menu types
+export interface MenuItem {
+  id: number;
+  category: number;
+  name: string;
+  description?: string;
+  price: number;
+  image_url?: string;
+  weight?: string;
+  is_available: boolean;
+  is_popular: boolean;
+  order: number;
+}
+
+export interface MenuCategory {
+  id: number;
+  name: string;
+  description?: string;
+  order: number;
+  is_active?: boolean;
+  items?: MenuItem[];
+  items_count?: number;
+}
+
 // Owner types
 export interface OwnerStats {
   today: {

@@ -5,10 +5,11 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { restaurantsApi } from '@/lib/api';
 import BookingForm from '@/components/booking/BookingForm';
-import type { Restaurant, Place } from '@/types';
+import type { Restaurant, Place, MenuCategory } from '@/types';
 import {
   ArrowLeft, Utensils, MapPin, Star, DollarSign, Building2, Users, Clock,
-  Info, Sparkles, Phone, Instagram, MessageCircle, ChevronLeft, ChevronRight
+  Info, Sparkles, Phone, Instagram, MessageCircle, ChevronLeft, ChevronRight,
+  UtensilsCrossed, Flame
 } from 'lucide-react';
 
 export default function PlacePage() {
@@ -18,6 +19,7 @@ export default function PlacePage() {
 
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [places, setPlaces] = useState<Place[]>([]);
+  const [menu, setMenu] = useState<MenuCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -91,12 +93,14 @@ export default function PlacePage() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const [restaurantData, placesData] = await Promise.all([
+      const [restaurantData, placesData, menuData] = await Promise.all([
         restaurantsApi.getBySlug(slug),
         restaurantsApi.getPlaces(slug),
+        restaurantsApi.getMenu(slug).catch(() => []),
       ]);
       setRestaurant(restaurantData);
       setPlaces(placesData);
+      setMenu(menuData);
     } catch (error) {
       console.error('Failed to load restaurant:', error);
     } finally {
@@ -422,6 +426,81 @@ export default function PlacePage() {
                           </span>
                         </div>
                       )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Menu */}
+            {menu.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-black/5 animate-fade-in" style={{ animationDelay: '400ms' }}>
+                <h2 className="font-bold text-lg mb-6 flex items-center gap-2">
+                  <span className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <UtensilsCrossed className="w-4 h-4 text-gray-600" />
+                  </span>
+                  Menyu
+                </h2>
+                <div className="space-y-8">
+                  {menu.map((category) => (
+                    <div key={category.id}>
+                      <h3 className="font-semibold text-gray-900 text-lg mb-4 pb-2 border-b border-gray-100">
+                        {category.name}
+                      </h3>
+                      {category.description && (
+                        <p className="text-sm text-gray-500 mb-4">{category.description}</p>
+                      )}
+                      <div className="space-y-4">
+                        {category.items?.map((item) => (
+                          <div
+                            key={item.id}
+                            className={`flex gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors ${
+                              !item.is_available ? 'opacity-50' : ''
+                            }`}
+                          >
+                            {item.image_url && (
+                              <img
+                                src={item.image_url}
+                                alt={item.name}
+                                className="w-20 h-20 object-cover rounded-xl flex-shrink-0"
+                              />
+                            )}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between gap-2">
+                                <div>
+                                  <h4 className="font-medium text-gray-900 flex items-center gap-2">
+                                    {item.name}
+                                    {item.is_popular && (
+                                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-100 text-orange-600 text-xs rounded-full">
+                                        <Flame className="w-3 h-3" />
+                                        Hit
+                                      </span>
+                                    )}
+                                  </h4>
+                                  {item.description && (
+                                    <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                                      {item.description}
+                                    </p>
+                                  )}
+                                  {item.weight && (
+                                    <span className="text-xs text-gray-400 mt-1 inline-block">
+                                      {item.weight}
+                                    </span>
+                                  )}
+                                </div>
+                                <span className="font-semibold text-gray-900 whitespace-nowrap">
+                                  {item.price.toLocaleString()} so'm
+                                </span>
+                              </div>
+                              {!item.is_available && (
+                                <span className="text-xs text-red-500 mt-2 inline-block">
+                                  Hozircha mavjud emas
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>

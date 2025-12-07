@@ -10,6 +10,8 @@ import type {
   Feature,
   OwnerStats,
   WorkingHours,
+  MenuCategory,
+  MenuItem,
 } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -111,6 +113,11 @@ export const restaurantsApi = {
     const response = await api.get<Feature[]>('/restaurants/features/');
     return response.data;
   },
+
+  getMenu: async (slug: string) => {
+    const response = await api.get<MenuCategory[]>(`/restaurants/${slug}/menu/`);
+    return response.data;
+  },
 };
 
 // Reservations API
@@ -191,6 +198,56 @@ export const ownerApi = {
 
   updateWorkingHours: async (data: Partial<WorkingHours>[]) => {
     const response = await api.post<WorkingHours[]>('/restaurants/owner/hours/bulk_update/', data);
+    return response.data;
+  },
+
+  // Menu Categories
+  getMenuCategories: async () => {
+    const response = await api.get<MenuCategory[]>('/restaurants/owner/menu-categories/');
+    return response.data;
+  },
+
+  createMenuCategory: async (data: { name: string; description?: string; order?: number; is_active?: boolean }) => {
+    const response = await api.post<MenuCategory>('/restaurants/owner/menu-categories/', data);
+    return response.data;
+  },
+
+  updateMenuCategory: async (id: number, data: Partial<MenuCategory>) => {
+    const response = await api.patch<MenuCategory>(`/restaurants/owner/menu-categories/${id}/`, data);
+    return response.data;
+  },
+
+  deleteMenuCategory: async (id: number) => {
+    await api.delete(`/restaurants/owner/menu-categories/${id}/`);
+  },
+
+  // Menu Items
+  getMenuItems: async (categoryId?: number) => {
+    const params = categoryId ? { category: categoryId } : {};
+    const response = await api.get<MenuItem[]>('/restaurants/owner/menu-items/', { params });
+    return response.data;
+  },
+
+  createMenuItem: async (data: Partial<MenuItem> & { category: number }) => {
+    const response = await api.post<MenuItem>('/restaurants/owner/menu-items/', data);
+    return response.data;
+  },
+
+  updateMenuItem: async (id: number, data: Partial<MenuItem>) => {
+    const response = await api.patch<MenuItem>(`/restaurants/owner/menu-items/${id}/`, data);
+    return response.data;
+  },
+
+  deleteMenuItem: async (id: number) => {
+    await api.delete(`/restaurants/owner/menu-items/${id}/`);
+  },
+
+  uploadMenuItemImage: async (id: number, formData: FormData) => {
+    const response = await api.patch<MenuItem>(
+      `/restaurants/owner/menu-items/${id}/`,
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    );
     return response.data;
   },
 };
