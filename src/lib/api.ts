@@ -190,7 +190,7 @@ export const ownerApi = {
   },
 
   updateWorkingHours: async (data: Partial<WorkingHours>[]) => {
-    const response = await api.post<WorkingHours[]>('/restaurants/owner/hours/', data);
+    const response = await api.post<WorkingHours[]>('/restaurants/owner/hours/bulk_update/', data);
     return response.data;
   },
 };
