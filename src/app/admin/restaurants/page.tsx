@@ -163,7 +163,7 @@ export default function AdminRestaurantsPage() {
                   <div className="w-20 h-20 bg-gray-100 rounded-xl overflow-hidden flex-shrink-0">
                     {restaurant.images && restaurant.images.length > 0 ? (
                       <img
-                        src={restaurant.images[0].image}
+                        src={restaurant.images[0].url}
                         alt={restaurant.name}
                         className="w-full h-full object-cover"
                       />
@@ -208,7 +208,7 @@ export default function AdminRestaurantsPage() {
                       {/* Actions */}
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => handleToggleActive(restaurant.id, restaurant.is_active)}
+                          onClick={() => handleToggleActive(restaurant.id, restaurant.is_active ?? true)}
                           className={`p-2 rounded-lg transition-colors ${
                             restaurant.is_active
                               ? 'text-gray-400 hover:text-orange-500 hover:bg-orange-50'

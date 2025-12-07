@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth';
-import { adminApi } from '@/lib/api';
-import type { User } from '@/types';
+import { adminApi, type AdminUser } from '@/lib/api';
 import {
   ArrowLeft, Users, Search, UserPlus, Edit2, Trash2,
   Shield, Store, User as UserIcon, Check, X, MoreVertical
@@ -15,7 +14,7 @@ export default function AdminUsersPage() {
   const router = useRouter();
   const { user, isAuthenticated, isLoading: authLoading, checkAuth } = useAuthStore();
 
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('');
@@ -66,7 +65,7 @@ export default function AdminUsersPage() {
     }
   };
 
-  const handleChangeRole = async (userId: number, newRole: string) => {
+  const handleChangeRole = async (userId: number, newRole: 'user' | 'owner' | 'admin') => {
     try {
       await adminApi.updateUser(userId, { role: newRole });
       setUsers(users.map(u => u.id === userId ? { ...u, role: newRole as 'user' | 'owner' | 'admin' } : u));
@@ -190,7 +189,7 @@ export default function AdminUsersPage() {
                     <td className="px-6 py-4">
                       <select
                         value={u.role}
-                        onChange={(e) => handleChangeRole(u.id, e.target.value)}
+                        onChange={(e) => handleChangeRole(u.id, e.target.value as 'user' | 'owner' | 'admin')}
                         className="px-3 py-1.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                         disabled={u.id === user?.id}
                       >

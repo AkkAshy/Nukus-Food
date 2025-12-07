@@ -193,8 +193,8 @@ export default function AdminCreateRestaurantPage() {
         description: formData.description,
         type: formData.type,
         address: formData.address || `${formData.latitude}, ${formData.longitude}`,
-        latitude: parseFloat(formData.latitude),
-        longitude: parseFloat(formData.longitude),
+        latitude: formData.latitude,
+        longitude: formData.longitude,
         phone: formData.phone,
         owner_id: formData.owner_id ? parseInt(formData.owner_id) : undefined,
       } as Parameters<typeof adminApi.createRestaurant>[0]);

@@ -190,7 +190,7 @@ interface AdminStats {
   reservations: { total: number; today: number; pending: number };
 }
 
-interface AdminUser {
+export interface AdminUser {
   id: number;
   username: string;
   full_name: string;

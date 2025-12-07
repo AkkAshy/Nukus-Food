@@ -199,8 +199,8 @@ export default function AdminEditRestaurantPage() {
         description: formData.description,
         type: formData.type,
         address: formData.address,
-        latitude: formData.latitude ? parseFloat(formData.latitude) : undefined,
-        longitude: formData.longitude ? parseFloat(formData.longitude) : undefined,
+        latitude: formData.latitude || undefined,
+        longitude: formData.longitude || undefined,
         phone: formData.phone,
         is_active: formData.is_active,
       });
