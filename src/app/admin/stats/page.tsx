@@ -320,8 +320,8 @@ export default function AdminStatsPage() {
                     {recentReservations.map((reservation) => (
                       <tr key={reservation.id} className="text-sm">
                         <td className="py-3">
-                          <div className="font-medium text-gray-900">{reservation.user_name}</div>
-                          <div className="text-gray-500 text-xs">{reservation.phone}</div>
+                          <div className="font-medium text-gray-900">{reservation.user_name || 'Noma\'lum'}</div>
+                          <div className="text-gray-500 text-xs">{reservation.user_phone || reservation.phone || '-'}</div>
                         </td>
                         <td className="py-3 text-gray-600">{reservation.restaurant_name}</td>
                         <td className="py-3 text-gray-600">{formatDate(reservation.date)}</td>

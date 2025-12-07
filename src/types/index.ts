@@ -109,6 +109,7 @@ export interface Reservation {
   place: number | Place | null;
   place_name?: string;
   date: string;
+  time: string;
   time_from: string;
   time_to?: string;
   guest_count: number;
@@ -116,6 +117,10 @@ export interface Reservation {
   status: 'pending' | 'confirmed' | 'canceled' | 'completed' | 'no_show';
   status_display: string;
   created_at: string;
+  // Admin/Owner fields
+  user_name?: string;
+  user_phone?: string;
+  phone?: string;
 }
 
 export interface ReservationCreate {
