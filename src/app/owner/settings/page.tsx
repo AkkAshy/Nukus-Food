@@ -12,6 +12,7 @@ import {
   Image, Upload, Trash2, Star, Building2, UtensilsCrossed
 } from 'lucide-react';
 import type { WorkingHours, RestaurantImage } from '@/types';
+import NotificationToggle from '@/components/NotificationToggle';
 
 declare global {
   interface Window {
@@ -393,6 +394,11 @@ export default function OwnerSettingsPage() {
               <p className="text-xs text-gray-500">Taomlar va narxlar</p>
             </div>
           </Link>
+        </div>
+
+        {/* Notifications */}
+        <div className="mb-6">
+          <NotificationToggle token={localStorage.getItem('access_token') || ''} />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
