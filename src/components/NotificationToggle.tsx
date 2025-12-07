@@ -29,9 +29,14 @@ export default function NotificationToggle({ token, compact = false }: Notificat
 
       if (supported) {
         setPermission(getNotificationPermission());
-        await registerServiceWorker();
-        const subscribed = await checkIsSubscribed();
-        setIsSubscribed(subscribed);
+        try {
+          await registerServiceWorker();
+          const subscribed = await checkIsSubscribed();
+          setIsSubscribed(subscribed);
+        } catch (error) {
+          console.log('Push initialization skipped:', error);
+          setIsSupported(false);
+        }
       }
 
       setIsLoading(false);
