@@ -8,8 +8,10 @@ import { ownerApi } from '@/lib/api';
 import type { Restaurant } from '@/types';
 import {
   ArrowLeft, Store, MapPin, Phone, Instagram, MessageCircle,
-  Clock, DollarSign, Save, AlertCircle, Check, Navigation, X
+  Clock, DollarSign, Save, AlertCircle, Check, Navigation, X,
+  Image, Upload, Trash2, Star
 } from 'lucide-react';
+import type { WorkingHours, RestaurantImage } from '@/types';
 
 declare global {
   interface Window {
@@ -27,6 +29,13 @@ export default function OwnerSettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+
+  // Working hours state
+  const [workingHours, setWorkingHours] = useState<WorkingHours[]>([]);
+
+  // Images state
+  const [images, setImages] = useState<RestaurantImage[]>([]);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // Map state
   const [isMapOpen, setIsMapOpen] = useState(false);
@@ -88,6 +97,29 @@ export default function OwnerSettingsPage() {
         slot_duration: data.slot_duration?.toString() || '60',
         min_booking_hours: data.min_booking_hours?.toString() || '1',
       });
+
+      // Set working hours
+      if (data.working_hours && data.working_hours.length > 0) {
+        setWorkingHours(data.working_hours);
+      } else {
+        // Initialize with default working hours
+        const defaultHours: WorkingHours[] = [];
+        for (let i = 0; i < 7; i++) {
+          defaultHours.push({
+            day_of_week: i,
+            day_name: ['Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Juma', 'Shanba', 'Yakshanba'][i],
+            open_time: '09:00',
+            close_time: '22:00',
+            is_closed: false,
+          });
+        }
+        setWorkingHours(defaultHours);
+      }
+
+      // Set images
+      if (data.images) {
+        setImages(data.images);
+      }
     } catch (err) {
       console.error('Failed to load restaurant:', err);
       setError('Ma\'lumotlarni yuklashda xatolik');
@@ -213,6 +245,58 @@ export default function OwnerSettingsPage() {
     setMapLoaded(false);
   };
 
+  // Working hours handlers
+  const handleWorkingHoursChange = (dayIndex: number, field: string, value: string | boolean) => {
+    setWorkingHours(prev => prev.map((wh, idx) =>
+      idx === dayIndex ? { ...wh, [field]: value } : wh
+    ));
+  };
+
+  // Image handlers
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      setUploadingImage(true);
+      const newImage = await ownerApi.uploadImage(formData);
+      setImages(prev => [...prev, { ...newImage, order: prev.length }]);
+    } catch (err) {
+      console.error('Failed to upload image:', err);
+      setError('Rasm yuklashda xatolik');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+  const handleDeleteImage = async (imageId: number) => {
+    if (!confirm('Rasmni o\'chirmoqchimisiz?')) return;
+
+    try {
+      await ownerApi.deleteImage(imageId);
+      setImages(prev => prev.filter(img => img.id !== imageId));
+    } catch (err) {
+      console.error('Failed to delete image:', err);
+      setError('Rasmni o\'chirishda xatolik');
+    }
+  };
+
+  const handleSetMainImage = async (imageId: number) => {
+    try {
+      await ownerApi.setMainImage(imageId);
+      setImages(prev => prev.map(img => ({
+        ...img,
+        is_main: img.id === imageId
+      })));
+    } catch (err) {
+      console.error('Failed to set main image:', err);
+      setError('Asosiy rasmni o\'rnatishda xatolik');
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -220,6 +304,8 @@ export default function OwnerSettingsPage() {
 
     try {
       setIsSaving(true);
+
+      // Update restaurant info
       await ownerApi.updateRestaurant({
         name: formData.name,
         description: formData.description,
@@ -234,6 +320,17 @@ export default function OwnerSettingsPage() {
         slot_duration: formData.slot_duration ? parseInt(formData.slot_duration) : undefined,
         min_booking_hours: formData.min_booking_hours ? parseInt(formData.min_booking_hours) : undefined,
       });
+
+      // Update working hours
+      await ownerApi.updateWorkingHours(
+        workingHours.map(wh => ({
+          day_of_week: wh.day_of_week,
+          open_time: wh.open_time,
+          close_time: wh.close_time,
+          is_closed: wh.is_closed,
+        }))
+      );
+
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
@@ -505,6 +602,137 @@ export default function OwnerSettingsPage() {
                 <p className="text-xs text-gray-500 mt-1">Necha soat oldin bron qilish kerak</p>
               </div>
             </div>
+          </div>
+
+          {/* Working Hours */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-black/5">
+            <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+              <Clock className="w-5 h-5 text-gray-400" />
+              Ish vaqti
+            </h2>
+
+            <div className="space-y-3">
+              {workingHours.map((wh, index) => (
+                <div key={wh.day_of_week} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                  <div className="w-28 font-medium text-gray-700">
+                    {wh.day_name}
+                  </div>
+
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={wh.is_closed}
+                      onChange={(e) => handleWorkingHoursChange(index, 'is_closed', e.target.checked)}
+                      className="w-4 h-4 text-orange-500 border-gray-300 rounded focus:ring-orange-500"
+                    />
+                    <span className="text-sm text-gray-600">Dam olish</span>
+                  </label>
+
+                  {!wh.is_closed && (
+                    <>
+                      <div className="flex items-center gap-2 ml-auto">
+                        <input
+                          type="time"
+                          value={wh.open_time}
+                          onChange={(e) => handleWorkingHoursChange(index, 'open_time', e.target.value)}
+                          className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                        />
+                        <span className="text-gray-400">—</span>
+                        <input
+                          type="time"
+                          value={wh.close_time}
+                          onChange={(e) => handleWorkingHoursChange(index, 'close_time', e.target.value)}
+                          className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Photo Gallery */}
+          <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-black/5">
+            <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+              <Image className="w-5 h-5 text-gray-400" />
+              Rasmlar
+            </h2>
+
+            {/* Upload Button */}
+            <div className="mb-4">
+              <label className="flex items-center justify-center gap-2 w-full p-4 border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-orange-300 hover:bg-orange-50/50 transition-colors">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
+                  disabled={uploadingImage}
+                />
+                {uploadingImage ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-orange-500/30 border-t-orange-500 rounded-full animate-spin" />
+                    <span className="text-gray-600">Yuklanmoqda...</span>
+                  </>
+                ) : (
+                  <>
+                    <Upload className="w-5 h-5 text-gray-400" />
+                    <span className="text-gray-600">Rasm yuklash</span>
+                  </>
+                )}
+              </label>
+            </div>
+
+            {/* Images Grid */}
+            {images.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                {images.map((img) => (
+                  <div key={img.id} className="relative group aspect-square rounded-xl overflow-hidden bg-gray-100">
+                    <img
+                      src={img.url}
+                      alt="Restaurant"
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Overlay with actions */}
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSetMainImage(img.id)}
+                        className={`p-2 rounded-lg transition-colors ${
+                          img.is_main
+                            ? 'bg-yellow-500 text-white'
+                            : 'bg-white/90 text-gray-700 hover:bg-yellow-500 hover:text-white'
+                        }`}
+                        title={img.is_main ? 'Asosiy rasm' : 'Asosiy qilish'}
+                      >
+                        <Star className={`w-4 h-4 ${img.is_main ? 'fill-current' : ''}`} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteImage(img.id)}
+                        className="p-2 bg-white/90 text-red-600 rounded-lg hover:bg-red-500 hover:text-white transition-colors"
+                        title="O'chirish"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {/* Main badge */}
+                    {img.is_main && (
+                      <div className="absolute top-2 left-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-md font-medium">
+                        Asosiy
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-gray-500">
+                <Image className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+                <p>Hali rasmlar yuklanmagan</p>
+              </div>
+            )}
           </div>
 
           {/* Error/Success Messages */}

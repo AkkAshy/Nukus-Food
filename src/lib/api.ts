@@ -9,6 +9,7 @@ import type {
   PaginatedResponse,
   Feature,
   OwnerStats,
+  WorkingHours,
 } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -179,6 +180,17 @@ export const ownerApi = {
 
   setMainImage: async (imageId: number) => {
     const response = await api.post(`/restaurants/owner/images/${imageId}/set_main/`);
+    return response.data;
+  },
+
+  // Working Hours
+  getWorkingHours: async () => {
+    const response = await api.get<WorkingHours[]>('/restaurants/owner/hours/');
+    return response.data;
+  },
+
+  updateWorkingHours: async (data: Partial<WorkingHours>[]) => {
+    const response = await api.post<WorkingHours[]>('/restaurants/owner/hours/', data);
     return response.data;
   },
 };
