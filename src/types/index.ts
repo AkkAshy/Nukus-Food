@@ -62,6 +62,7 @@ export interface Restaurant {
   reservation_mode?: string;
   reservation_mode_display?: string;
   is_open: boolean;
+  is_active?: boolean;
   rating: number | null;
   review_count?: number;
   main_image?: string;
