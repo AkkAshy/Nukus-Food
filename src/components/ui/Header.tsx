@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth';
 import { useEffect, useState } from 'react';
-import { BookOpen, LogOut, Menu, X, Store, Shield } from 'lucide-react';
+import { BookOpen, LogOut, Menu, X, Store, Shield, Hotel as HotelIcon } from 'lucide-react';
 
 export default function Header() {
   const { user, isAuthenticated, logout, checkAuth } = useAuthStore();
@@ -52,6 +52,13 @@ export default function Header() {
               className="px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100/80 rounded-lg transition-all"
             >
               Xarita
+            </Link>
+            <Link
+              href="/hotels"
+              className="flex items-center gap-1.5 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100/80 rounded-lg transition-all"
+            >
+              <HotelIcon className="w-4 h-4" />
+              Mehmonxonalar
             </Link>
             <Link
               href="/about"
@@ -171,6 +178,14 @@ export default function Header() {
             onClick={() => setMobileMenuOpen(false)}
           >
             Xarita
+          </Link>
+          <Link
+            href="/hotels"
+            className="flex items-center gap-2 px-4 py-3 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-xl transition-all"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <HotelIcon className="w-5 h-5" />
+            Mehmonxonalar
           </Link>
           <Link
             href="/about"

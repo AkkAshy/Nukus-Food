@@ -185,3 +185,131 @@ export interface PaginatedResponse<T> {
   previous: string | null;
   results: T[];
 }
+
+// ===== Hotels =====
+
+export interface Amenity {
+  id: number;
+  name: string;
+  icon: string;
+  scope: 'hotel' | 'room' | 'both';
+}
+
+export interface HotelImage {
+  id: number;
+  url: string;
+  is_main: boolean;
+  order: number;
+}
+
+export interface RoomImage {
+  id: number;
+  url: string;
+  is_main: boolean;
+  order: number;
+}
+
+export type RoomType =
+  | 'single'
+  | 'double'
+  | 'twin'
+  | 'triple'
+  | 'family'
+  | 'suite'
+  | 'apartment';
+
+export interface Room {
+  id: number;
+  name: string;
+  type: RoomType;
+  type_display: string;
+  capacity: number;
+  bed_count: number;
+  size_sqm?: number | null;
+  price_per_night: string; // DRF Decimal приходит строкой
+  description?: string;
+  amenities?: Amenity[];
+  quantity: number;
+  is_active: boolean;
+  images?: RoomImage[];
+}
+
+export type HotelType = 'hotel' | 'hostel' | 'guesthouse' | 'apart' | 'other';
+
+export interface Hotel {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  type: HotelType;
+  type_display: string;
+  stars?: number | null;
+  address: string;
+  latitude: string;
+  longitude: string;
+  phone?: string;
+  email?: string;
+  instagram?: string;
+  telegram?: string;
+  website?: string;
+  check_in_time?: string;
+  check_out_time?: string;
+  amenities?: Amenity[];
+  images?: HotelImage[];
+  rooms?: Room[];
+  reservation_mode?: 'auto' | 'manual';
+  reservation_mode_display?: string;
+  min_booking_hours?: number;
+  min_price?: number | null;
+  rating: number | null;
+  review_count?: number;
+  main_image?: string | null;
+}
+
+export interface HotelAvailabilityRoom {
+  id: number;
+  name: string;
+  type: RoomType;
+  capacity: number;
+  price_per_night: number;
+  available: boolean;
+}
+
+export interface HotelAvailability {
+  check_in: string;
+  check_out: string;
+  nights: number;
+  rooms: HotelAvailabilityRoom[];
+}
+
+export type HotelBookingStatus = 'pending' | 'confirmed' | 'canceled' | 'completed' | 'no_show';
+
+export interface HotelBooking {
+  id: number;
+  hotel: number;
+  hotel_name: string;
+  hotel_slug: string;
+  room: number | null;
+  room_name?: string | null;
+  check_in_date: string;
+  check_out_date: string;
+  nights: number;
+  guest_count: number;
+  notes?: string;
+  total_price: string | null;
+  status: HotelBookingStatus;
+  status_display: string;
+  cancel_reason?: string;
+  created_at: string;
+}
+
+export interface HotelBookingCreate {
+  hotel: number;
+  room: number;
+  check_in_date: string;
+  check_out_date: string;
+  guest_count: number;
+  notes?: string;
+  guest_name?: string;
+  guest_phone?: string;
+}

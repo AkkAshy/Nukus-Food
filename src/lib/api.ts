@@ -12,6 +12,12 @@ import type {
   WorkingHours,
   MenuCategory,
   MenuItem,
+  Hotel,
+  Amenity,
+  HotelAvailability,
+  HotelBooking,
+  HotelBookingCreate,
+  Room,
 } from '@/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
@@ -360,6 +366,105 @@ export const reservationsApi = {
 
   cancel: async (id: number) => {
     await api.delete(`/reservations/${id}/`);
+  },
+};
+
+// ===== Hotels API =====
+
+export const hotelsApi = {
+  getAll: async (params?: {
+    type?: string;
+    stars?: number;
+    search?: string;
+    min_price?: number;
+    max_price?: number;
+    amenity?: number;
+  }) => {
+    const response = await api.get<PaginatedResponse<Hotel>>('/hotels/', { params });
+    return response.data;
+  },
+
+  getBySlug: async (slug: string) => {
+    const response = await api.get<Hotel>(`/hotels/${slug}/`);
+    return response.data;
+  },
+
+  getAvailability: async (slug: string, checkIn: string, checkOut: string, guests = 1) => {
+    const response = await api.get<HotelAvailability>(`/hotels/${slug}/availability/`, {
+      params: { check_in: checkIn, check_out: checkOut, guests },
+    });
+    return response.data;
+  },
+
+  getAmenities: async () => {
+    const response = await api.get<Amenity[]>('/hotels/amenities/');
+    return response.data;
+  },
+};
+
+export const hotelBookingsApi = {
+  create: async (data: HotelBookingCreate) => {
+    const response = await api.post<HotelBooking>('/hotels/bookings/', data);
+    return response.data;
+  },
+
+  getMy: async () => {
+    const response = await api.get<PaginatedResponse<HotelBooking> | HotelBooking[]>('/hotels/bookings/');
+    const data = response.data;
+    return Array.isArray(data) ? data : data.results;
+  },
+
+  getById: async (id: number) => {
+    const response = await api.get<HotelBooking>(`/hotels/bookings/${id}/`);
+    return response.data;
+  },
+
+  cancel: async (id: number) => {
+    await api.delete(`/hotels/bookings/${id}/`);
+  },
+};
+
+export const hotelOwnerApi = {
+  getMyHotel: async () => {
+    const response = await api.get<Hotel>('/hotels/owner/');
+    return response.data;
+  },
+
+  updateMyHotel: async (data: Partial<Hotel>) => {
+    const response = await api.patch<Hotel>('/hotels/owner/', data);
+    return response.data;
+  },
+
+  getRooms: async () => {
+    const response = await api.get<Room[]>('/hotels/owner/rooms/');
+    return response.data;
+  },
+
+  createRoom: async (data: Partial<Room>) => {
+    const response = await api.post<Room>('/hotels/owner/rooms/', data);
+    return response.data;
+  },
+
+  updateRoom: async (id: number, data: Partial<Room>) => {
+    const response = await api.patch<Room>(`/hotels/owner/rooms/${id}/`, data);
+    return response.data;
+  },
+
+  deleteRoom: async (id: number) => {
+    await api.delete(`/hotels/owner/rooms/${id}/`);
+  },
+
+  getBookings: async () => {
+    const response = await api.get<PaginatedResponse<HotelBooking> | HotelBooking[]>(
+      '/hotels/owner/bookings/'
+    );
+    const data = response.data;
+    return Array.isArray(data) ? data : data.results;
+  },
+
+  updateBooking: async (id: number, data: { status?: string; cancel_reason?: string }) => {
+    const response = await api.patch<HotelBooking>(`/hotels/owner/bookings/${id}/`, data);
+    return response.data;
   },
 };
 
