@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import type { Restaurant } from '@/types';
+import { useUserLocation } from '@/hooks/useUserLocation';
 
 declare global {
   interface Window {
@@ -26,7 +27,10 @@ export default function YandexMap({
   const mapRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapInstanceRef = useRef<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userMarkerRef = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { location: userLocation } = useUserLocation();
 
   const initMap = useCallback(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
@@ -172,6 +176,30 @@ export default function YandexMap({
       map.geoObjects.add(placemark);
     });
   }, [restaurants, isLoaded, onRestaurantClick]);
+
+  // "You are here" marker
+  useEffect(() => {
+    const map = mapInstanceRef.current;
+    if (!isLoaded || !map || !userLocation) return;
+
+    if (userMarkerRef.current) {
+      map.geoObjects.remove(userMarkerRef.current);
+    }
+
+    userMarkerRef.current = new window.ymaps.Placemark(
+      [userLocation.lat, userLocation.lng],
+      {
+        balloonContentHeader: '<b>Siz shu yerdasiz</b>',
+        balloonContentBody: `Aniqlik: ±${Math.round(userLocation.accuracy)} m`,
+        hintContent: 'Sizning joylashuvingiz',
+      },
+      {
+        preset: 'islands#violetCircleDotIcon',
+        zIndex: 1000,
+      }
+    );
+    map.geoObjects.add(userMarkerRef.current);
+  }, [isLoaded, userLocation]);
 
   return (
     <div className="relative w-full h-full min-h-[400px]">

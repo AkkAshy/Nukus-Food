@@ -363,7 +363,35 @@ export const adminApi = {
   deleteHotel: async (id: number) => {
     await api.delete(`/admin/hotels/${id}/`);
   },
+
+  // Menu price stats
+  getMenuStats: async (limit = 5) => {
+    const response = await api.get<MenuStats>('/admin/menu-stats/', { params: { limit } });
+    return response.data;
+  },
 };
+
+export interface MenuStatsItem {
+  id: number;
+  name: string;
+  price: number;
+  weight: string;
+  category: string;
+  restaurant_name: string;
+  restaurant_slug: string;
+  restaurant_type: string;
+}
+
+export interface MenuStats {
+  summary: {
+    items_count: number;
+    avg_price: number;
+    max_price: number;
+    min_price: number;
+  };
+  most_expensive: MenuStatsItem[];
+  cheapest: MenuStatsItem[];
+}
 
 export const reservationsApi = {
   getAvailability: async (slug: string, date: string, guestCount?: number) => {

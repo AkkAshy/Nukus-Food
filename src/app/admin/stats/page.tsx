@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth';
-import { adminApi } from '@/lib/api';
+import { adminApi, type MenuStats } from '@/lib/api';
 import type { Restaurant, Reservation } from '@/types';
 import {
   ArrowLeft, Users, Store, Calendar, TrendingUp,
-  BarChart3, Clock, MapPin, Activity
+  BarChart3, Clock, MapPin, Activity, ChefHat, TrendingDown, DollarSign
 } from 'lucide-react';
 
 interface AdminStats {
@@ -48,6 +48,7 @@ export default function AdminStatsPage() {
     canceled: 0,
     completed: 0,
   });
+  const [menuStats, setMenuStats] = useState<MenuStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -70,15 +71,17 @@ export default function AdminStatsPage() {
     try {
       setIsLoading(true);
 
-      const [statsData, restaurantsData, reservationsData] = await Promise.all([
+      const [statsData, restaurantsData, reservationsData, menuStatsData] = await Promise.all([
         adminApi.getStats(),
         adminApi.getRestaurants(),
         adminApi.getReservations(),
+        adminApi.getMenuStats(5).catch(() => null),
       ]);
 
       setStats(statsData);
       setRestaurants(restaurantsData.results);
       setRecentReservations(reservationsData.results.slice(0, 10));
+      setMenuStats(menuStatsData);
 
       // Calculate reservations by status
       const byStatus: ReservationsByStatus = {
@@ -373,6 +376,123 @@ export default function AdminStatsPage() {
             )}
           </div>
         </div>
+
+        {/* Menu stats — most expensive / cheapest */}
+        {menuStats && menuStats.summary.items_count > 0 && (
+          <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Most expensive */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-black/5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-gray-900">Eng qimmat taomlar</h2>
+                    <p className="text-xs text-gray-400">Top {menuStats.most_expensive.length} ta</p>
+                  </div>
+                </div>
+                <DollarSign className="w-5 h-5 text-red-400" />
+              </div>
+              {menuStats.most_expensive.length === 0 ? (
+                <p className="text-sm text-gray-400">Maʼlumot yoʻq</p>
+              ) : (
+                <ul className="space-y-2">
+                  {menuStats.most_expensive.map((item, i) => (
+                    <li key={item.id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                      <span className="w-6 h-6 rounded-full bg-red-50 text-red-600 text-xs font-semibold flex items-center justify-center shrink-0">
+                        {i + 1}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900 truncate">
+                          {item.name}{item.weight ? ` · ${item.weight}` : ''}
+                        </p>
+                        <p className="text-xs text-gray-400 truncate">
+                          {item.restaurant_name} · {item.category}
+                        </p>
+                      </div>
+                      <p className="font-semibold text-red-600 shrink-0">
+                        {new Intl.NumberFormat('ru-RU').format(item.price)} <span className="text-xs text-gray-400 font-normal">soʻm</span>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Cheapest */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-black/5">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <TrendingDown className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-gray-900">Eng arzon taomlar</h2>
+                    <p className="text-xs text-gray-400">Top {menuStats.cheapest.length} ta</p>
+                  </div>
+                </div>
+                <ChefHat className="w-5 h-5 text-green-400" />
+              </div>
+              {menuStats.cheapest.length === 0 ? (
+                <p className="text-sm text-gray-400">Maʼlumot yoʻq</p>
+              ) : (
+                <ul className="space-y-2">
+                  {menuStats.cheapest.map((item, i) => (
+                    <li key={item.id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                      <span className="w-6 h-6 rounded-full bg-green-50 text-green-600 text-xs font-semibold flex items-center justify-center shrink-0">
+                        {i + 1}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-gray-900 truncate">
+                          {item.name}{item.weight ? ` · ${item.weight}` : ''}
+                        </p>
+                        <p className="text-xs text-gray-400 truncate">
+                          {item.restaurant_name} · {item.category}
+                        </p>
+                      </div>
+                      <p className="font-semibold text-green-600 shrink-0">
+                        {new Intl.NumberFormat('ru-RU').format(item.price)} <span className="text-xs text-gray-400 font-normal">soʻm</span>
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            {/* Summary card across both columns */}
+            <div className="lg:col-span-2 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl p-6 shadow-sm ring-1 ring-black/5">
+              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <BarChart3 className="w-5 h-5 text-indigo-600" />
+                Menyu boʻyicha xulosa
+              </h3>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <p className="text-xs text-gray-500">Jami taomlar</p>
+                  <p className="text-2xl font-bold text-gray-900">{menuStats.summary.items_count}</p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Oʻrtacha narx</p>
+                  <p className="text-2xl font-bold text-indigo-600">
+                    {new Intl.NumberFormat('ru-RU').format(menuStats.summary.avg_price)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Eng arzoni</p>
+                  <p className="text-2xl font-bold text-green-600">
+                    {new Intl.NumberFormat('ru-RU').format(menuStats.summary.min_price)}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-500">Eng qimmati</p>
+                  <p className="text-2xl font-bold text-red-600">
+                    {new Intl.NumberFormat('ru-RU').format(menuStats.summary.max_price)}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
