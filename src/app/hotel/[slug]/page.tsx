@@ -73,7 +73,7 @@ export default function HotelDetailPage() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+          <div className="w-16 h-16 border-4 border-teal-500/30 border-t-teal-500 rounded-full animate-spin" />
           <span className="text-gray-500">Yuklanmoqda...</span>
         </div>
       </div>
@@ -87,7 +87,7 @@ export default function HotelDetailPage() {
           <h2 className="text-2xl font-semibold text-gray-900">Mehmonxona topilmadi</h2>
           <Link
             href="/hotels"
-            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl"
+            className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl"
           >
             <ArrowLeft className="w-4 h-4" /> Mehmonxonalarga qaytish
           </Link>
@@ -123,8 +123,8 @@ export default function HotelDetailPage() {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100">
-                <HotelIcon className="w-24 h-24 text-blue-300" />
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-100 to-cyan-100">
+                <HotelIcon className="w-24 h-24 text-teal-300" />
               </div>
             )}
 
@@ -180,7 +180,7 @@ export default function HotelDetailPage() {
               {hotel.min_price != null && (
                 <div className="text-right">
                   <span className="text-xs text-gray-400">от</span>
-                  <p className="text-xl font-semibold text-blue-600">
+                  <p className="text-xl font-semibold text-teal-600">
                     {formatPrice(hotel.min_price)} <span className="text-sm text-gray-500 font-normal">сум / ночь</span>
                   </p>
                 </div>
@@ -265,13 +265,13 @@ export default function HotelDetailPage() {
           {hotel.amenities && hotel.amenities.length > 0 && (
             <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-6">
               <h2 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-blue-500" /> Удобства отеля
+                <Sparkles className="w-4 h-4 text-teal-500" /> Удобства отеля
               </h2>
               <div className="flex flex-wrap gap-2">
                 {hotel.amenities.map((a) => (
                   <span
                     key={a.id}
-                    className="px-3 py-1.5 bg-blue-50 text-blue-700 rounded-lg text-sm"
+                    className="px-3 py-1.5 bg-teal-50 text-teal-700 rounded-lg text-sm"
                   >
                     {a.name}
                   </span>
@@ -288,14 +288,14 @@ export default function HotelDetailPage() {
                 {hotel.rooms.map((room) => (
                   <div
                     key={room.id}
-                    className="flex flex-col sm:flex-row gap-3 p-4 rounded-xl border border-gray-100 hover:border-blue-200 transition-colors"
+                    className="flex flex-col sm:flex-row gap-3 p-4 rounded-xl border border-gray-100 hover:border-teal-200 transition-colors"
                   >
                     <div className="w-full sm:w-32 h-32 sm:h-24 rounded-lg overflow-hidden bg-gray-100 shrink-0">
                       {room.images && room.images[0] ? (
                         <img src={room.images[0].url} alt={room.name} className="w-full h-full object-cover" />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-blue-50">
-                          <BedDouble className="w-10 h-10 text-blue-300" />
+                        <div className="w-full h-full flex items-center justify-center bg-teal-50">
+                          <BedDouble className="w-10 h-10 text-teal-300" />
                         </div>
                       )}
                     </div>
@@ -306,7 +306,7 @@ export default function HotelDetailPage() {
                           <p className="text-xs text-gray-500 mt-0.5">{room.type_display}</p>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="font-semibold text-blue-600">{formatPrice(room.price_per_night)}</p>
+                          <p className="font-semibold text-teal-600">{formatPrice(room.price_per_night)}</p>
                           <p className="text-xs text-gray-400">сум / ночь</p>
                         </div>
                       </div>

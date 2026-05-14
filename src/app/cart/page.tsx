@@ -40,7 +40,7 @@ export default function CartPage() {
           </button>
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-              <ShoppingCart className="w-6 h-6 text-orange-500" />
+              <ShoppingCart className="w-6 h-6 text-amber-500" />
               Savatcha
             </h1>
             <p className="text-sm text-gray-500">{totalQty} ta taom</p>
@@ -57,14 +57,14 @@ export default function CartPage() {
 
         {items.length === 0 ? (
           <div className="bg-white rounded-2xl p-12 shadow-sm ring-1 ring-black/5 text-center">
-            <div className="w-20 h-20 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ShoppingCart className="w-10 h-10 text-orange-300" />
+            <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ShoppingCart className="w-10 h-10 text-amber-300" />
             </div>
             <h2 className="text-xl font-semibold text-gray-900 mb-2">Savatcha boʻsh</h2>
             <p className="text-gray-500 mb-6">Restoran tanlang va taom qoʻshing</p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-orange-500/30 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-amber-500/30 transition-all"
             >
               Restoranlarni koʻrish
               <ChevronRight className="w-4 h-4" />
@@ -77,7 +77,7 @@ export default function CartPage() {
                 <div className="px-5 py-3 border-b border-gray-100">
                   <Link
                     href={`/place/${group[0].restaurant_slug}`}
-                    className="text-sm font-medium text-gray-700 hover:text-orange-600"
+                    className="text-sm font-medium text-gray-700 hover:text-amber-600"
                   >
                     {group[0].restaurant_name}
                   </Link>
@@ -90,7 +90,7 @@ export default function CartPage() {
                           // eslint-disable-next-line @next/next/no-img-element
                           <img src={it.image_url} alt={it.name} className="w-full h-full object-cover" />
                         ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-orange-100 to-red-100" />
+                          <div className="w-full h-full bg-gradient-to-br from-amber-100 to-rose-100" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -110,9 +110,9 @@ export default function CartPage() {
                         <span className="w-7 text-center font-medium">{it.quantity}</span>
                         <button
                           onClick={() => setQty(it.menu_item_id, it.quantity + 1)}
-                          className="w-8 h-8 rounded-full bg-orange-100 hover:bg-orange-200 flex items-center justify-center"
+                          className="w-8 h-8 rounded-full bg-amber-100 hover:bg-amber-200 flex items-center justify-center"
                         >
-                          <Plus className="w-4 h-4 text-orange-600" />
+                          <Plus className="w-4 h-4 text-amber-600" />
                         </button>
                       </div>
                       <button
@@ -139,11 +139,11 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between text-lg font-semibold pt-3 border-t border-gray-100">
                 <span className="text-gray-900">Jami</span>
-                <span className="text-orange-600">{formatPrice(grandTotal)} soʻm</span>
+                <span className="text-amber-600">{formatPrice(grandTotal)} soʻm</span>
               </div>
               <button
                 onClick={() => router.push('/checkout')}
-                className="w-full mt-3 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 transition-all"
+                className="w-full mt-3 py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white font-medium rounded-xl shadow-lg shadow-amber-500/30 transition-all"
               >
                 Buyurtma rasmiylashtirish
               </button>

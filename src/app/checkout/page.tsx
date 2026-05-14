@@ -76,7 +76,7 @@ export default function CheckoutPage() {
           </p>
           <Link
             href="/"
-            className="inline-block w-full py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 transition-all"
+            className="inline-block w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-medium rounded-xl shadow-lg shadow-amber-500/30 transition-all"
           >
             Bosh sahifaga qaytish
           </Link>
@@ -102,7 +102,7 @@ export default function CheckoutPage() {
           {/* Delivery */}
           <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-5">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <Truck className="w-5 h-5 text-orange-500" /> Yetkazib berish
+              <Truck className="w-5 h-5 text-amber-500" /> Yetkazib berish
             </h2>
             <div className="space-y-3">
               <div>
@@ -112,7 +112,7 @@ export default function CheckoutPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Aliyev Anvar"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                 />
               </div>
               <div>
@@ -124,7 +124,7 @@ export default function CheckoutPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+998 90 123 45 67"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                 />
               </div>
               <div>
@@ -136,7 +136,7 @@ export default function CheckoutPage() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="Nukus, Doʻstlik koʻchasi, 15"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                 />
               </div>
               <div>
@@ -146,7 +146,7 @@ export default function CheckoutPage() {
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Domofon, qavat, alohida soʻrovlar..."
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 resize-none"
+                  className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 resize-none"
                 />
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
           {/* Payment */}
           <div className="bg-white rounded-2xl shadow-sm ring-1 ring-black/5 p-5">
             <h2 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-orange-500" /> Toʻlov usuli
+              <CreditCard className="w-5 h-5 text-amber-500" /> Toʻlov usuli
             </h2>
             <div className="grid grid-cols-2 gap-2">
               {([
@@ -170,7 +170,7 @@ export default function CheckoutPage() {
                   onClick={() => setPayment(m.v)}
                   className={`flex items-center gap-2 p-3 rounded-xl border-2 transition-all ${
                     payment === m.v
-                      ? 'border-orange-500 bg-orange-50'
+                      ? 'border-amber-500 bg-amber-50'
                       : 'border-gray-100 hover:border-gray-200'
                   }`}
                 >
@@ -208,7 +208,7 @@ export default function CheckoutPage() {
             </div>
             <div className="flex justify-between text-lg font-semibold pt-3 mt-2 border-t border-gray-100">
               <span>Jami</span>
-              <span className="text-orange-600">{formatPrice(grandTotal)} soʻm</span>
+              <span className="text-amber-600">{formatPrice(grandTotal)} soʻm</span>
             </div>
           </div>
 
@@ -222,7 +222,7 @@ export default function CheckoutPage() {
           <button
             disabled={submitting || items.length === 0}
             onClick={submit}
-            className="w-full py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-xl shadow-lg shadow-orange-500/30 transition-all"
+            className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-xl shadow-lg shadow-amber-500/30 transition-all"
           >
             {submitting ? (
               <span className="flex items-center justify-center gap-2">

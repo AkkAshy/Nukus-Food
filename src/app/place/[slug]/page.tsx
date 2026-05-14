@@ -131,7 +131,7 @@ export default function PlacePage() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin" />
+          <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
           <span className="text-gray-500">Yuklanmoqda...</span>
         </div>
       </div>
@@ -149,7 +149,7 @@ export default function PlacePage() {
           <p className="text-gray-500 mt-2 mb-6">Bu sahifa mavjud emas yoki o'chirilgan</p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 text-white rounded-xl hover:bg-amber-600 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
             Bosh sahifaga qaytish
@@ -258,8 +258,8 @@ export default function PlacePage() {
               )}
             </>
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-100 to-red-100">
-              <Utensils className="w-32 h-32 text-orange-300" />
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-rose-100">
+              <Utensils className="w-32 h-32 text-amber-300" />
             </div>
           )}
 
@@ -338,8 +338,8 @@ export default function PlacePage() {
                 </p>
               </div>
               <div className="bg-white rounded-2xl p-4 shadow-sm ring-1 ring-black/5">
-                <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center mb-3">
-                  <Clock className="w-5 h-5 text-orange-600" />
+                <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center mb-3">
+                  <Clock className="w-5 h-5 text-amber-600" />
                 </div>
                 <p className="text-sm text-gray-500">Bron turi</p>
                 <p className="text-lg font-bold text-gray-900">
@@ -424,11 +424,11 @@ export default function PlacePage() {
                   {places.map((place) => (
                     <div
                       key={place.id}
-                      className="group border border-gray-100 hover:border-orange-200 rounded-xl p-4 transition-all hover:shadow-md"
+                      className="group border border-gray-100 hover:border-amber-200 rounded-xl p-4 transition-all hover:shadow-md"
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">
+                          <h3 className="font-semibold text-gray-900 group-hover:text-amber-600 transition-colors">
                             {place.name}
                           </h3>
                           <p className="text-sm text-gray-500">{place.type_display}</p>
@@ -440,7 +440,7 @@ export default function PlacePage() {
                       {place.deposit_amount && (
                         <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
                           <span className="text-sm text-gray-500">Oldindan to'lov</span>
-                          <span className="text-orange-600 font-semibold">
+                          <span className="text-amber-600 font-semibold">
                             {place.deposit_amount.toLocaleString()} so'm
                           </span>
                         </div>
@@ -490,7 +490,7 @@ export default function PlacePage() {
                                   <h4 className="font-medium text-gray-900 flex items-center gap-2">
                                     {item.name}
                                     {item.is_popular && (
-                                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-100 text-orange-600 text-xs rounded-full">
+                                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-100 text-amber-600 text-xs rounded-full">
                                         <Flame className="w-3 h-3" />
                                         Hit
                                       </span>
@@ -518,7 +518,7 @@ export default function PlacePage() {
                                       className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                                         addedItemId === item.id
                                           ? 'bg-green-500 text-white'
-                                          : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm hover:shadow-md'
+                                          : 'bg-amber-500 hover:bg-amber-600 text-white shadow-sm hover:shadow-md'
                                       }`}
                                     >
                                       {addedItemId === item.id ? (

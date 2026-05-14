@@ -41,8 +41,8 @@ export default function HotelCard({ hotel, compact = false }: HotelCardProps) {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100">
-                <HotelIcon className="w-6 h-6 text-blue-400" />
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-100 to-cyan-100">
+                <HotelIcon className="w-6 h-6 text-teal-400" />
               </div>
             )}
           </div>
@@ -54,7 +54,7 @@ export default function HotelCard({ hotel, compact = false }: HotelCardProps) {
             </div>
             <p className="text-sm text-gray-500 truncate">{hotel.type_display}</p>
             {price && (
-              <p className="text-xs font-medium text-blue-600 mt-1">
+              <p className="text-xs font-medium text-teal-600 mt-1">
                 от {price} сум / ночь
               </p>
             )}
@@ -77,8 +77,8 @@ export default function HotelCard({ hotel, compact = false }: HotelCardProps) {
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-100">
-            <HotelIcon className="w-16 h-16 text-blue-300" />
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-teal-100 to-cyan-100">
+            <HotelIcon className="w-16 h-16 text-teal-300" />
           </div>
         )}
 
@@ -98,7 +98,7 @@ export default function HotelCard({ hotel, compact = false }: HotelCardProps) {
       </div>
 
       <div className="p-4">
-        <h3 className="font-semibold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+        <h3 className="font-semibold text-lg text-gray-900 group-hover:text-teal-600 transition-colors">
           {hotel.name}
         </h3>
 
@@ -112,7 +112,7 @@ export default function HotelCard({ hotel, compact = false }: HotelCardProps) {
             {price ? (
               <>
                 <span className="text-xs text-gray-400">от</span>
-                <p className="text-base font-semibold text-blue-600">
+                <p className="text-base font-semibold text-teal-600">
                   {price}
                   <span className="text-xs text-gray-500 ml-1 font-normal">сум / ночь</span>
                 </p>
@@ -121,8 +121,8 @@ export default function HotelCard({ hotel, compact = false }: HotelCardProps) {
               <span className="text-sm text-gray-400">Посмотреть номера</span>
             )}
           </div>
-          <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center group-hover:bg-blue-500 transition-colors">
-            <ChevronRight className="w-4 h-4 text-blue-500 group-hover:text-white transition-colors" />
+          <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center group-hover:bg-teal-500 transition-colors">
+            <ChevronRight className="w-4 h-4 text-teal-500 group-hover:text-white transition-colors" />
           </div>
         </div>
       </div>

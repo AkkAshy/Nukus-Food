@@ -24,7 +24,7 @@ const HotelsMap = dynamic(() => import('@/components/map/HotelsMap'), {
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
       <div className="flex flex-col items-center gap-3">
-        <div className="w-12 h-12 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-teal-500/30 border-t-teal-500 rounded-full animate-spin" />
         <span className="text-gray-500 text-sm">Xarita yuklanmoqda...</span>
       </div>
     </div>
@@ -88,7 +88,7 @@ export default function HotelsPage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-16 lg:pt-20">
       {/* Hero */}
-      <div className="relative z-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 pt-8 pb-8 lg:pb-12">
+      <div className="relative z-0 bg-gradient-to-br from-teal-600 via-cyan-600 to-emerald-600 pt-8 pb-8 lg:pb-12">
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -212,7 +212,7 @@ export default function HotelsPage() {
       {isLoading ? (
         <div className="flex items-center justify-center h-96">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
+            <div className="w-16 h-16 border-4 border-teal-500/30 border-t-teal-500 rounded-full animate-spin" />
             <span className="text-gray-500">Yuklanmoqda...</span>
           </div>
         </div>

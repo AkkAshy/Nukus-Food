@@ -10,7 +10,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-16 lg:pt-20">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-orange-500 to-red-500 text-white">
+      <div className="bg-gradient-to-br from-amber-500 to-rose-500 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24">
           <div className="max-w-3xl">
             <h1 className="text-4xl lg:text-5xl font-bold mb-6">
@@ -23,7 +23,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-orange-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-amber-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
               >
                 <MapPin className="w-5 h-5" />
                 Xaritani ko'rish
@@ -44,8 +44,8 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto px-4 -mt-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-2xl p-6 shadow-lg ring-1 ring-black/5 text-center">
-            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-              <Store className="w-6 h-6 text-orange-600" />
+            <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <Store className="w-6 h-6 text-amber-600" />
             </div>
             <p className="text-3xl font-bold text-gray-900">10+</p>
             <p className="text-sm text-gray-500">Joylar</p>
@@ -85,8 +85,8 @@ export default function AboutPage() {
 
         <div className="grid md:grid-cols-3 gap-8">
           <div className="bg-white rounded-2xl p-8 shadow-sm ring-1 ring-black/5">
-            <div className="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mb-6">
-              <MapPin className="w-7 h-7 text-orange-600" />
+            <div className="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-6">
+              <MapPin className="w-7 h-7 text-amber-600" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-3">Xaritada ko'ring</h3>
             <p className="text-gray-500">
@@ -121,7 +121,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-block px-4 py-2 bg-orange-500/20 text-orange-400 rounded-full text-sm font-medium mb-6">
+              <span className="inline-block px-4 py-2 bg-amber-500/20 text-amber-400 rounded-full text-sm font-medium mb-6">
                 Restoran egalariga
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold mb-6">

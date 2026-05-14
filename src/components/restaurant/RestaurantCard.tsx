@@ -30,8 +30,8 @@ export default function RestaurantCard({ restaurant, compact = false }: Restaura
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-100 to-red-100">
-                <Utensils className="w-6 h-6 text-orange-400" />
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-rose-100">
+                <Utensils className="w-6 h-6 text-amber-400" />
               </div>
             )}
           </div>
@@ -75,8 +75,8 @@ export default function RestaurantCard({ restaurant, compact = false }: Restaura
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-100 to-red-100">
-            <Utensils className="w-16 h-16 text-orange-300" />
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-rose-100">
+            <Utensils className="w-16 h-16 text-amber-300" />
           </div>
         )}
 
@@ -105,7 +105,7 @@ export default function RestaurantCard({ restaurant, compact = false }: Restaura
       {/* Content */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-lg text-gray-900 group-hover:text-orange-600 transition-colors">
+          <h3 className="font-semibold text-lg text-gray-900 group-hover:text-amber-600 transition-colors">
             {restaurant.name}
           </h3>
           {restaurant.rating && (
@@ -155,8 +155,8 @@ export default function RestaurantCard({ restaurant, compact = false }: Restaura
         <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">Band qilish</span>
-            <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center group-hover:bg-orange-500 transition-colors">
-              <ChevronRight className="w-4 h-4 text-orange-500 group-hover:text-white transition-colors" />
+            <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center group-hover:bg-amber-500 transition-colors">
+              <ChevronRight className="w-4 h-4 text-amber-500 group-hover:text-white transition-colors" />
             </div>
           </div>
         </div>

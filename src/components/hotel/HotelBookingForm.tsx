@@ -133,7 +133,7 @@ export default function HotelBookingForm({ hotel }: Props) {
           </p>
           <button
             onClick={() => router.push('/cabinet/reservations')}
-            className="mt-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+            className="mt-2 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl transition-colors"
           >
             Мои брони
           </button>
@@ -165,7 +165,7 @@ export default function HotelBookingForm({ hotel }: Props) {
                 setCheckOut(next.toISOString().slice(0, 10));
               }
             }}
-            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </label>
         <label className="block">
@@ -181,7 +181,7 @@ export default function HotelBookingForm({ hotel }: Props) {
               return d.toISOString().slice(0, 10);
             })()}
             onChange={(e) => setCheckOut(e.target.value)}
-            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
         </label>
       </div>
@@ -197,7 +197,7 @@ export default function HotelBookingForm({ hotel }: Props) {
           max={20}
           value={guests}
           onChange={(e) => setGuests(Math.max(1, parseInt(e.target.value) || 1))}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
       </label>
 
@@ -223,16 +223,16 @@ export default function HotelBookingForm({ hotel }: Props) {
                   onClick={() => setSelectedRoomId(room.id)}
                   className={`w-full text-left p-3 rounded-xl border transition-all ${
                     selected
-                      ? 'border-blue-500 bg-blue-50'
+                      ? 'border-teal-500 bg-teal-50'
                       : disabled
                       ? 'border-gray-100 bg-gray-50 opacity-50 cursor-not-allowed'
-                      : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
+                      : 'border-gray-200 hover:border-teal-300 hover:bg-teal-50/50'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
                       <p className="font-medium text-gray-900 flex items-center gap-2">
-                        <BedDouble className="w-4 h-4 text-blue-500" /> {room.name}
+                        <BedDouble className="w-4 h-4 text-teal-500" /> {room.name}
                       </p>
                       <p className="text-xs text-gray-500 mt-0.5">
                         до {room.capacity} {room.capacity === 1 ? 'гостя' : 'гостей'}
@@ -240,7 +240,7 @@ export default function HotelBookingForm({ hotel }: Props) {
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="font-semibold text-blue-600">{formatPrice(room.price_per_night)}</p>
+                      <p className="font-semibold text-teal-600">{formatPrice(room.price_per_night)}</p>
                       <p className="text-xs text-gray-400">сум / ночь</p>
                     </div>
                   </div>
@@ -261,22 +261,22 @@ export default function HotelBookingForm({ hotel }: Props) {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Поздний заезд, детская кроватка..."
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
         />
       </label>
 
       {/* Total */}
       {selectedRoom && nights > 0 && (
-        <div className="rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 p-4 text-sm">
+        <div className="rounded-xl bg-gradient-to-br from-teal-50 to-cyan-50 p-4 text-sm">
           <div className="flex justify-between text-gray-600">
             <span>
               {formatPrice(selectedRoom.price_per_night)} × {nights} {nights === 1 ? 'ночь' : 'ночей'}
             </span>
             <span>{formatPrice(totalPrice)} сум</span>
           </div>
-          <div className="flex justify-between font-semibold text-gray-900 pt-2 border-t border-blue-100 mt-2">
+          <div className="flex justify-between font-semibold text-gray-900 pt-2 border-t border-teal-100 mt-2">
             <span>Итого</span>
-            <span className="text-blue-700">{formatPrice(totalPrice)} сум</span>
+            <span className="text-teal-700">{formatPrice(totalPrice)} сум</span>
           </div>
         </div>
       )}
@@ -292,7 +292,7 @@ export default function HotelBookingForm({ hotel }: Props) {
         type="button"
         disabled={submitting || !selectedRoomId || nights <= 0}
         onClick={submit}
-        className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-xl shadow-lg shadow-blue-500/30 transition-all"
+        className="w-full py-3 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-xl shadow-lg shadow-teal-500/30 transition-all"
       >
         {submitting ? (
           <span className="flex items-center justify-center gap-2">

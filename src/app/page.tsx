@@ -14,7 +14,7 @@ const YandexMap = dynamic(() => import('@/components/map/YandexMap'), {
   loading: () => (
     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
       <div className="flex flex-col items-center gap-3">
-        <div className="w-12 h-12 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
         <span className="text-gray-500 text-sm">Xarita yuklanmoqda...</span>
       </div>
     </div>
@@ -85,7 +85,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-16 lg:pt-20">
       {/* Hero Section */}
-      <div className="relative z-0 bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 pt-8 pb-8 lg:pb-12">
+      <div className="relative z-0 bg-gradient-to-br from-amber-500 via-red-500 to-pink-500 pt-8 pb-8 lg:pb-12">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
 
@@ -192,7 +192,7 @@ export default function HomePage() {
       {isLoading ? (
         <div className="flex items-center justify-center h-96">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin" />
+            <div className="w-16 h-16 border-4 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
             <span className="text-gray-500">Yuklanmoqda...</span>
           </div>
         </div>

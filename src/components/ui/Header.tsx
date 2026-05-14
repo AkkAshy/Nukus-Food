@@ -39,7 +39,7 @@ export default function Header() {
         <div className="flex justify-between items-center h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-red-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30 group-hover:shadow-orange-500/50 transition-shadow">
+            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-rose-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/30 group-hover:shadow-amber-500/50 transition-shadow">
               <BookOpen className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
@@ -78,12 +78,12 @@ export default function Header() {
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative p-2 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all"
+              className="relative p-2 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-all"
               title="Savatcha"
             >
               <ShoppingCart className="w-5 h-5" />
               {mounted && cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-orange-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-amber-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
@@ -105,7 +105,7 @@ export default function Header() {
                 {user.role === 'owner' && (
                   <Link
                     href="/owner"
-                    className="flex items-center gap-2 px-3 py-2 bg-orange-50 text-orange-600 hover:bg-orange-100 rounded-lg transition-all"
+                    className="flex items-center gap-2 px-3 py-2 bg-amber-50 text-amber-600 hover:bg-amber-100 rounded-lg transition-all"
                     title="Boshqaruv paneli"
                   >
                     <Store className="w-5 h-5" />
@@ -139,7 +139,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-orange-500/30 hover:-translate-y-0.5 transition-all"
+                  className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-amber-500/30 hover:-translate-y-0.5 transition-all"
                 >
                   Boshlash
                 </Link>
@@ -183,7 +183,7 @@ export default function Header() {
           {isAuthenticated && user && user.role === 'owner' && (
             <Link
               href="/owner"
-              className="flex items-center gap-2 px-4 py-3 bg-orange-50 text-orange-600 hover:bg-orange-100 rounded-xl transition-all"
+              className="flex items-center gap-2 px-4 py-3 bg-amber-50 text-amber-600 hover:bg-amber-100 rounded-xl transition-all"
               onClick={() => setMobileMenuOpen(false)}
             >
               <Store className="w-5 h-5" />
