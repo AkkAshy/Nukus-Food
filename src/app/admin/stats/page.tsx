@@ -260,8 +260,9 @@ export default function AdminStatsPage() {
                 const typeLabels: Record<string, string> = {
                   restaurant: 'Restoran',
                   cafe: 'Kafe',
-                  teahouse: 'Choyxona',
+                  choyxona: 'Choyxona',
                   fastfood: 'Fast Food',
+                  other: 'Boshqa',
                 };
                 const typeCounts: Record<string, number> = {};
                 restaurants.forEach((r) => {

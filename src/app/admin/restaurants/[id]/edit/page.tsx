@@ -325,8 +325,9 @@ export default function AdminEditRestaurantPage() {
                 >
                   <option value="restaurant">Restoran</option>
                   <option value="cafe">Kafe</option>
-                  <option value="teahouse">Choyxona</option>
+                  <option value="choyxona">Choyxona</option>
                   <option value="fastfood">Fast Food</option>
+                  <option value="other">Boshqa</option>
                 </select>
               </div>
 

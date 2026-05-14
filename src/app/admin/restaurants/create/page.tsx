@@ -296,14 +296,26 @@ export default function AdminCreateRestaurantPage() {
                 </label>
                 <select
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    if (v === 'hotel') {
+                      router.push('/admin/hotels/create');
+                      return;
+                    }
+                    setFormData({ ...formData, type: v });
+                  }}
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
                 >
                   <option value="restaurant">Restoran</option>
                   <option value="cafe">Kafe</option>
-                  <option value="teahouse">Choyxona</option>
+                  <option value="choyxona">Choyxona</option>
                   <option value="fastfood">Fast Food</option>
+                  <option value="other">Boshqa</option>
+                  <option value="hotel">🏨 Hotel (mehmonxona qoʻshish)</option>
                 </select>
+                <p className="mt-1 text-xs text-gray-400">
+                  Mehmonxona qoʻshish uchun alohida forma ochiladi
+                </p>
               </div>
 
               <div>

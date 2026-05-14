@@ -338,6 +338,31 @@ export const adminApi = {
     const response = await api.get<PaginatedResponse<Reservation>>('/admin/reservations/', { params });
     return response.data;
   },
+
+  // Hotels
+  getHotels: async (params?: { search?: string; is_active?: boolean }) => {
+    const response = await api.get<PaginatedResponse<Hotel>>('/admin/hotels/', { params });
+    return response.data;
+  },
+
+  getHotel: async (id: number) => {
+    const response = await api.get<Hotel>(`/admin/hotels/${id}/`);
+    return response.data;
+  },
+
+  createHotel: async (data: Partial<Hotel> & { owner_id?: number }) => {
+    const response = await api.post<Hotel>('/admin/hotels/', data);
+    return response.data;
+  },
+
+  updateHotel: async (id: number, data: Partial<Hotel>) => {
+    const response = await api.patch<Hotel>(`/admin/hotels/${id}/`, data);
+    return response.data;
+  },
+
+  deleteHotel: async (id: number) => {
+    await api.delete(`/admin/hotels/${id}/`);
+  },
 };
 
 export const reservationsApi = {
