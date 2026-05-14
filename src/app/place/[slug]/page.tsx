@@ -5,11 +5,12 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { restaurantsApi } from '@/lib/api';
 import BookingForm from '@/components/booking/BookingForm';
+import { useCartStore } from '@/stores/cart';
 import type { Restaurant, Place, MenuCategory } from '@/types';
 import {
   ArrowLeft, Utensils, MapPin, Star, DollarSign, Building2, Users, Clock,
   Info, Sparkles, Phone, Instagram, MessageCircle, ChevronLeft, ChevronRight,
-  UtensilsCrossed, Flame
+  UtensilsCrossed, Flame, Plus, Check
 } from 'lucide-react';
 
 export default function PlacePage() {
@@ -20,6 +21,24 @@ export default function PlacePage() {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [places, setPlaces] = useState<Place[]>([]);
   const [menu, setMenu] = useState<MenuCategory[]>([]);
+  const cartAdd = useCartStore((s) => s.add);
+  const [addedItemId, setAddedItemId] = useState<number | null>(null);
+
+  const handleAddToCart = (item: { id: number; name: string; price: number; image_url?: string | null; weight?: string }) => {
+    if (!restaurant) return;
+    cartAdd({
+      menu_item_id: item.id,
+      name: item.name,
+      price: item.price,
+      image_url: item.image_url ?? null,
+      weight: item.weight ?? '',
+      restaurant_id: restaurant.id,
+      restaurant_name: restaurant.name,
+      restaurant_slug: restaurant.slug,
+    });
+    setAddedItemId(item.id);
+    setTimeout(() => setAddedItemId((cur) => (cur === item.id ? null : cur)), 1200);
+  };
   const [isLoading, setIsLoading] = useState(true);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -488,9 +507,32 @@ export default function PlacePage() {
                                     </span>
                                   )}
                                 </div>
-                                <span className="font-semibold text-gray-900 whitespace-nowrap">
-                                  {item.price.toLocaleString()} so'm
-                                </span>
+                                <div className="flex flex-col items-end gap-2 shrink-0">
+                                  <span className="font-semibold text-gray-900 whitespace-nowrap">
+                                    {item.price.toLocaleString()} so&apos;m
+                                  </span>
+                                  {item.is_available && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleAddToCart(item)}
+                                      className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                                        addedItemId === item.id
+                                          ? 'bg-green-500 text-white'
+                                          : 'bg-orange-500 hover:bg-orange-600 text-white shadow-sm hover:shadow-md'
+                                      }`}
+                                    >
+                                      {addedItemId === item.id ? (
+                                        <>
+                                          <Check className="w-3.5 h-3.5" /> Qoʻshildi
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Plus className="w-3.5 h-3.5" /> Savatchaga
+                                        </>
+                                      )}
+                                    </button>
+                                  )}
+                                </div>
                               </div>
                               {!item.is_available && (
                                 <span className="text-xs text-red-500 mt-2 inline-block">

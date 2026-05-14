@@ -2,13 +2,18 @@
 
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth';
+import { useCartStore } from '@/stores/cart';
 import { useEffect, useState } from 'react';
-import { BookOpen, LogOut, Menu, X, Store, Shield, Hotel as HotelIcon } from 'lucide-react';
+import { BookOpen, LogOut, Menu, X, Store, Shield, Hotel as HotelIcon, ShoppingCart } from 'lucide-react';
 
 export default function Header() {
   const { user, isAuthenticated, logout, checkAuth } = useAuthStore();
+  const cartCount = useCartStore((s) => s.totalQuantity());
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     checkAuth();
@@ -70,6 +75,19 @@ export default function Header() {
 
           {/* Auth buttons */}
           <div className="flex items-center gap-3">
+            {/* Cart */}
+            <Link
+              href="/cart"
+              className="relative p-2 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all"
+              title="Savatcha"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {mounted && cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 bg-orange-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </Link>
             {isAuthenticated && user ? (
               <div className="flex items-center gap-2">
                 {/* Admin Panel Link */}
